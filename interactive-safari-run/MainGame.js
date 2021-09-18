@@ -37,14 +37,6 @@ function main() {
   skytextured.position.set(-500, 357, 0);
   skytextured.rotation.y = (Math.PI/2);
   scene.add(skytextured);
-  //-500, 250, 0
-
-
-  const axesHelper = new THREE.AxesHelper( 300 );
-  scene.add( axesHelper );
-  // x rosso
-  // y verde
-  // z blu
 
   var ball_x =  230.77777570244587;
   var ball_y = 130.80795482069422; 
@@ -69,23 +61,9 @@ function main() {
     const groundColor = 0xB97A20;  // brownish orange
     const intensity = 0.8;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-    //light.position.set(230, 130, 0);
-    //690, 700, 0
+    
     console.log(light.position);
     scene.add(light);
-/*const targetObject = new THREE.Object3D();
-    targetObject.position.set(0, 130, 0);
-    scene.add(targetObject);
-
-    light.target = targetObject;
-
-    scene.add(new THREE.CameraHelper( light.shadow.camera ));
-    light.castShadow = true;
-    light.shadowDarkness = 0.5;
-    light.shadowCameraVisible = true;
-     */
-    
-
   }
   
 
@@ -251,32 +229,12 @@ function main() {
       switch (e.keyCode) {
         case 39: //ArrowRight
         if((ball_z)>-125){
-          //const tweenright = new TWEEN.Tween({x: scene.getObjectByName("pokeball").position.x, y: scene.getObjectByName("pokeball").position.y, z:scene.getObjectByName("pokeball").position.z}).to({x: scene.getObjectByName("pokeball").position.x, y: scene.getObjectByName("pokeball").position.y, z:scene.getObjectByName("pokeball").position.z-3}, 4000);
-          //tweenright.onUpdate(function (ball) {
-          //ball.position.set(scene.getObjectByName("pokeball").position.x, scene.getObjectByName("pokeball").position.y, scene.getObjectByName("pokeball").position.z-3);
-          //});
-          //tweenright.start();
-          
-          //scene.getObjectByName("pokeball").position.z -= 3;
-          //camera.position.z += 3;
           ball_z -= 1.5;
           renderPokeball();
-          //console.log(scene.getObjectByName("pokeball").position.z);
         }
         break;
         case 37: //ArrowLeft
         if((ball_z)<125){
-          //const tweenleft = new TWEEN.Tween({x: scene.getObjectByName("pokeball").position.x, y: scene.getObjectByName("pokeball").position.y, z:scene.getObjectByName("pokeball").position.z}).to({x: scene.getObjectByName("pokeball").position.x, y: scene.getObjectByName("pokeball").position.y, z:scene.getObjectByName("pokeball").position.z+3}, 500);
-          //tweenleft.onUpdate(function (object) {
-            //scene.getObjectByName("pokeball").position.set(object.x, object.y, object.z)
-          //});
-          //tweenleft.start();
-          //scene.getObjectByName("pokeball").position.set(scene.getObjectByName("pokeball").position.x, scene.getObjectByName("pokeball").position.y, scene.getObjectByName("pokeball").position.z+3);
-          
-          //scene.getObjectByName("pokeball").position.z += 3;
-          //camera.position.z += 3;
-
-
           ball_z += 1.5;
           renderPokeball();
         }
@@ -617,19 +575,3 @@ if(i == 29){
 }
 
 main();
-
-
-/* COSE DA FARE ALLA FINE
--riordinare tutte le variabili dei punti e vite in alto ----------- FATTO MA RIFARE ALLA FINE ---------------
-
-VENERDI 17 SETTEMBRE:
--grafica con tween della pokeball
-
-
--REPORT IMPORTANTE
-
--QUANDO UPLOAD SU GIT MANDARE MAIL AL PROF!! 
-
-
-
-*/
