@@ -1,23 +1,21 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import TWEEN from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.5.0/dist/tween.esm.js';
-import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 
 function main() {
   const canvas = document.querySelector('#c');
   const renderer = new THREE.WebGLRenderer({canvas});
   renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 
   const fov = 45;
   const aspect = 2; 
   const near = 0.01;
   const far = 10000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(293.77777570244587, 160.80795482069422,2.15099826554873);
-  
-  const controls = new OrbitControls(camera, canvas);
-  controls.target.set(-300, 0, 10);
-  controls.update();
+  camera.position.set(290, 155,0);
+  camera.lookAt(0, 95, 0);
 
   const loader = new THREE.TextureLoader();
   const scene = new THREE.Scene();
@@ -28,9 +26,18 @@ function main() {
   var text = loader.load('sand.jpg');
   text.wrapS = THREE.RepeatWrapping;
   text.wrapT = THREE.RepeatWrapping;
-  var steel = new THREE.MeshBasicMaterial({map : text});
-  text.mesh = new THREE.Mesh(platform, steel);
+  var ground = new THREE.MeshBasicMaterial({map : text});
+  text.mesh = new THREE.Mesh(platform, ground);
   scene.add(text.mesh);
+
+  var sky = new THREE.BoxGeometry(1350, 500, 40);
+  var materialsky = new THREE.MeshBasicMaterial({color: 'rgb(135,206,250)'});
+  //text_sky.color.set('rgb(135,206,250)');
+  var skytextured = new THREE.Mesh(sky, materialsky);
+  skytextured.position.set(-500, 357, 0);
+  skytextured.rotation.y = (Math.PI/2);
+  scene.add(skytextured);
+  //-500, 250, 0
 
 
   const axesHelper = new THREE.AxesHelper( 300 );
@@ -41,7 +48,7 @@ function main() {
 
   var ball_x =  230.77777570244587;
   var ball_y = 130.80795482069422; 
-  var ball_z = 2.15099826554873;
+  var ball_z = 0;
 
   var life_count = 3;
   var num_pika = 0;
@@ -56,16 +63,16 @@ function main() {
   var velocity;
   var spawn_vel;
 
-
   {
     const skyColor = 0xB1E1FF;  // light blue
     const groundColor = 0xB97A20;  // brownish orange
-    const intensity = 1;
+    const intensity = 0.8;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+    console.log(light.position);
     scene.add(light);
 
   }
-
+  
   {
     const color = 0xFFFFFF;
     const intensity = 1;
@@ -166,6 +173,22 @@ function main() {
       });
       
       tweenmove.start();
+
+     });
+    }
+  }
+
+  function renderCloudGltf(url, X, Y, Z, s1, s2, s3){
+    var objecttoload = new THREE.Scene(); 
+    {
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load(url, (gltf) => {
+      objecttoload.add(gltf.scene);
+      objecttoload.position.set(X, Y, Z);
+      objecttoload.scale.set(s1, s2, s3);
+      objecttoload.rotation.y = (Math.PI/2);
+
+      scene.add(objecttoload);
 
      });
     }
@@ -345,6 +368,14 @@ function main() {
 
   function init(){
     renderObjectGltf('./pokeball/scene.gltf', ball_x, ball_y, ball_z, 4, 4, 4);
+    renderCloudGltf('./cloud/scene.gltf', -200, 200, 50, 5, 5, 5);
+    renderCloudGltf('./cloud/scene.gltf', -200, 150, -30, 8, 8, 8);
+    renderCloudGltf('./sun/scene.gltf', -205, 165, -30, 0.1, 0.1, 0.1);
+    renderCloudGltf('./cloud/scene.gltf', -200, 200, 100, 10, 10, 10);
+    renderCloudGltf('./cloud/scene.gltf', -200, 200, 400, 10, 10, 10);
+    renderCloudGltf('./cloud/scene.gltf', -200, 150, 200, 6, 6, 6);
+    renderCloudGltf('./cloud/scene.gltf', -200, 200, -100, 10, 10, 10);
+    renderCloudGltf('./cloud/scene.gltf', -200, 160, -300, 7, 7, 7);
 
     //welcome menu
     //title
@@ -570,19 +601,3 @@ if(i == 29){
 }
 
 main();
-
-
-/* COSE DA FARE ALLA FINE
--riordinare tutte le variabili dei punti e vite in alto ----------- FATTO MA RIFARE ALLA FINE ---------------
-
-VENERDI 17 SETTEMBRE:
--grafica con tween della pokeball
-
-
--REPORT IMPORTANTE
-
--QUANDO UPLOAD SU GIT MANDARE MAIL AL PROF!! 
-
-
-
-*/
