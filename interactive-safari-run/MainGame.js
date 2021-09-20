@@ -32,7 +32,6 @@ function main() {
 
   var sky = new THREE.BoxGeometry(1350, 500, 40);
   var materialsky = new THREE.MeshBasicMaterial({color: 'rgb(135,206,250)'});
-  //text_sky.color.set('rgb(135,206,250)');
   var skytextured = new THREE.Mesh(sky, materialsky);
   skytextured.position.set(-500, 357, 0);
   skytextured.rotation.y = (Math.PI/2);
@@ -57,13 +56,13 @@ function main() {
 
 
   {
-    const skyColor = 0xB1E1FF;  // light blue
-    const groundColor = 0xB97A20;  // brownish orange
+    const skyColor = 0xB1E1FF;
+    const groundColor = 0xB97A20;
     const intensity = 0.8;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-    
-    console.log(light.position);
     scene.add(light);
+    
+
   }
   
 
@@ -72,9 +71,7 @@ function main() {
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(5, 10, 2);
-    light.castShadow = true;
     scene.add(light);
-    scene.add(light.target);
   }
 
 
@@ -410,22 +407,17 @@ function main() {
   }
 
   function onCompleteBall(posz, id){
-    console.log("oncomplete chiamata");
       if(posz <= ball_z+5 && posz >= ball_z-5){
         life_count++;
-        console.log(life_count);
         document.getElementById("lifecount").innerHTML = life_count;
       }
     scene.remove(scene.getObjectByName("ball" + id));
     }
   
     function onCompletePika( posz, id){
-      console.log("oncomplete chiamata");
         if(posz <= ball_z+5 && posz >= ball_z-5){
           life_count--;
           points_count++;
-          console.log(life_count);
-          console.log(points_count);
           document.getElementById("pointscount").innerHTML = points_count;
           document.getElementById("lifecount").innerHTML = life_count;
         }
@@ -433,11 +425,9 @@ function main() {
       }
     
       function onCompleteMimi( posz, id){
-        console.log("oncomplete chiamata");
           if(posz <= ball_z+5 && posz >= ball_z-5){
             life_count = -1;
           }
-          console.log(scene.getObjectByName("mimi" + id).position);
           scene.remove(scene.getObjectByName("mimi" + id));
         }
 
