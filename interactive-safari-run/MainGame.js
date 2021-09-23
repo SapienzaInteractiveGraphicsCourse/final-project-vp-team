@@ -1,6 +1,6 @@
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
-import TWEEN from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.5.0/dist/tween.esm.js';
-import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from './threejs/build/three.module.js';
+import { GLTFLoader } from './threejs/examples/jsm/loaders/GLTFLoader.js';
+import TWEEN from './tween.esm.js';
 
 function main() {
   const canvas = document.querySelector('#c');
